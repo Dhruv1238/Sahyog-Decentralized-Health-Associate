@@ -6,7 +6,6 @@ import { useContext, createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../FirebaseSDK";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { get } from "http";
 
 export const Interaction = createContext();
 
