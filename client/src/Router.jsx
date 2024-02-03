@@ -13,6 +13,8 @@ import Landing from './pages/landing/Landing';
 import Specialist from './pages/landing/specialist/Specialist';
 import Profile from './pages/Profile';
 import SOS from './pages/SOS/SOS';
+import Cal from './components/Calendar/Cal';
+
 
 export const Router = () => {
     return (
@@ -31,7 +33,7 @@ export const Router = () => {
                 <Route path='/profile' element={<Profile />} />
                 <Route path="/chat-pdf" element={<ChatPDF />} />
                 <Route path="/sos" element={<SOS />} />
-
+                <Route path="/calendar" element={<Cal />} />
             </Routes>
         </>
     );
