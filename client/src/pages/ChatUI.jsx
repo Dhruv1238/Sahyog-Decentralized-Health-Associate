@@ -18,6 +18,7 @@ const ChatUI = ({ sourceId }) => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
+        setContent('');
         setMessages((prevMessages) => [
             ...prevMessages,
             { role: 'user', content },
@@ -55,12 +56,12 @@ const ChatUI = ({ sourceId }) => {
                 <h1 className="text-2xl font-bold text-color1">Ask the bot about your queries</h1>
                 <p className="text-color1">Ask anything about your health</p>
             </div>
-            <div ref={chatContainerRef} className='flex flex-col gap-2 my-24 text-xl'>
+            <div ref={chatContainerRef} className='flex flex-col gap-2 my-24'>
                 {messages.map((message, index) => (
                     <div
                         key={index}
-                        className={`message ${message.role === 'assistant' ? 'bg-gray-800 text-white mr-auto' : 'bg-color3 text-white ml-auto'
-                            } flex rounded-xl p-2 m-1 max-w-[80%]`}
+                        className={`message ${message.role === 'assistant' ? 'bg-gray-800 text-white mr-auto ' : 'bg-color3 text-white ml-auto'
+                            } flex rounded-xl p-2 m-1 max-w-[80%] text-base`}
                     >
                         {message.content}
                     </div>
@@ -68,16 +69,17 @@ const ChatUI = ({ sourceId }) => {
                 <div ref={messagesEndRef} />
             </div>
 
-            <div className="fixed bottom-0 left-0 right-0 flex items-center gap-2 p-4 bg-[#121212]">
+            <form className="fixed bottom-0 left-0 right-0 flex items-center gap-2 p-4 bg-[#121212]" onSubmit={(e) => handleFormSubmit(e)}>
                 <Input
-                    placeholder="Type a message"
-                    className="flex-1 p-1 text-[18px] text-white bg-gray-800 rounded-md"
+                    label='Start Talking to your report..'
+                    className="flex-1 p-1 text-[18px] text-white rounded-md"
+                    color='white'
                     value={content}
                     size='lg'
                     onChange={(e) => setContent(e.target.value)}
                 />
-                <Button className="p-2 text-white rounded-md bg-color2" onClick={handleFormSubmit} type='submit'>Send <IoSendSharp /></Button>
-            </div>
+                <Button className="p-2 text-white rounded-md bg-color2 w-20 flex flex-1 items-center justify-center gap-4" type='submit'>Send <IoSendSharp /></Button>
+            </form>
         </div>
     );
 };
