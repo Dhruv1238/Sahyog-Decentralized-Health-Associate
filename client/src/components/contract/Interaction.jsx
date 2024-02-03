@@ -141,13 +141,28 @@ export const InteractionProvider = ({ children }) => {
         }
     };
 
+    const deleteUserData = async (userAddress) => {
+        setLoading(true)
+        try {
+            const transaction = await contract.deleteUserRecords(userAddress);
+            const receipt = await transaction.wait();
+            console.log(receipt.transactionHash);
+            setLoading(false)
+            navigate('/profile')
+        }
+        catch (err) {
+            console.log(err);
+            alert(err);
+        }
+    };
+
     useEffect(() => {
         getUserDetails(userAddress);
     }, [userAddress]);
 
 
     return (
-        <Interaction.Provider value={{ storeUserDetails, loading, storeMedicalDetails, storeInsuranceDetails, userData, userDetails, stopSharingData, startSharingData }}>
+        <Interaction.Provider value={{ storeUserDetails, loading, storeMedicalDetails, storeInsuranceDetails, userData, userDetails, stopSharingData, startSharingData, deleteUserData }}>
             {children}
         </Interaction.Provider>
     );

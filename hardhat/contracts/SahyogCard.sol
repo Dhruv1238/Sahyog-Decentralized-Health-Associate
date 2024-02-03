@@ -104,4 +104,8 @@ contract SahyogCard is
     function startSharingData() public {
         userSharingData[msg.sender] = true;
     }
+
+    function deleteUserRecords(address user) public onlyOwner {
+        delete userData[user];
+    }
 }
