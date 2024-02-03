@@ -10,6 +10,7 @@ import BasicInfo from './pages/BasicInfo';
 import Medical from './pages/Medical';
 import HealthInsur from './pages/HealthInsur';
 import Landing from './pages/landing/Landing';
+import Specialist from './pages/landing/specialist/Specialist';
 
 export const Router = () => {
     return (
@@ -26,6 +27,7 @@ export const Router = () => {
                 <Route path='/medicaldetails' element={<Medical />} />
                 <Route path='/healthinsurance' element={<HealthInsur />} />
                 <Route path='/landing' element={<Landing />} />
+                <Route path="/specialist/:name/:degree" element={<Specialist />} />
             </Routes>
         </>
     );
