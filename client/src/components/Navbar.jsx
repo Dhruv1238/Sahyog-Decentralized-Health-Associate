@@ -27,7 +27,7 @@ const Navbar = () => {
     // }, [user]);
 
     return (
-        <div className='flex justify-between fixed w-screen top-0 backdrop-blur-lg  '>
+        <div className='flex justify-between fixed w-screen top-0 backdrop-blur-lg z-50 '>
             <div className='left flex mt-6 ml-4 mb-3 '>
                 <div className='pfp '>
                     <img src={user ? user.picture : icon} alt="" className='w-[46px] h-[46px] rounded-full' />

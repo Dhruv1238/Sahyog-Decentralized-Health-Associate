@@ -6,9 +6,10 @@ import { Interaction } from '../components/contract/Interaction'
 const Intro = () => {
     const [userType, setUserType] = useState('')
     const {userDetails} = useContext(Interaction);
+    console.log(userDetails)
     const navigate = useNavigate()
     useEffect(() => {
-        if(userDetails && userDetails[2]!==null){
+        if(userDetails && userDetails[2]!==""){
             navigate('/landing')
         }
     }, [userDetails])
