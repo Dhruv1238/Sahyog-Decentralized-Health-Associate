@@ -19,7 +19,7 @@ const PersonCard = ({ photoSrc, name, degree, clickFunc }) => {
                 <img src={photoSrc} alt="Person Photo" className="object-cover w-full h-full" />
             </div>
             <div className="mt-3 text-center">
-                <p className="text-md font-bold text-white">{name}</p>
+                <p className="font-bold text-white text-md whitespace-nowrap">{name}</p>
                 <p className="text-sm text-gray-500">{degree}</p>
             </div>
         </div>
@@ -125,7 +125,7 @@ const Landing = () => {
                     </div>
                 </div>
                 <div className='flex flex-col gap-4'>
-                    <Typography color='white' className='text-3xl font-bold font-inter mb-3'>Talk to a Specialist</Typography>
+                    <Typography color='white' className='mb-3 text-3xl font-bold font-inter'>Talk to a Specialist</Typography>
                     <div className='flex items-center gap-5 jusitfy-center'>
                         <PersonCard name='Dr. Arpita' degree='MBBS' photoSrc={portrait} clickFunc={clickhandler} />
                         <PersonCard name='Dr. Svarna' degree='DMLT' photoSrc={`https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/22/22ec948f9e9b82f432de3b21f12b6ae4d2fd4c9d_full.jpg`} clickFunc={clickhandler} />

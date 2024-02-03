@@ -23,18 +23,17 @@ const Specialist = () => {
         <>
             <Navbar />
             <div className='flex flex-col mt-[100px]  ml-7 h-screen overflow-scroll '>
-                <div className='mb-3'>
-                    <Typography color='white' className='text-2xl font-bold font-inter mb-[-5px]'>
+                <div className='flex flex-col gap-1 mb-3'>
+                    <Typography color='white' className='text-3xl font-bold font-inter'>
                         {name}
                     </Typography>
-                    <Typography color='gray' className='text-sm font-inter '>
+                    <Typography color='gray' className='text-md font-inter'>
                         {degree}
                     </Typography>
                 </div>
                 <div>
                     <img src={docPhoto} alt="Specialist Photo" />
                 </div>
-
                 <div>
                     <Typography color='white' className='mt-5 text-xl font-bold font-inter '>
                         About
