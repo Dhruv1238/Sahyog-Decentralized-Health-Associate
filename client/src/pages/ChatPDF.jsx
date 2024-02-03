@@ -19,7 +19,7 @@ export function DrawerDefault() {
 
     return (
         <React.Fragment>
-            <GiHamburgerMenu onClick={openDrawer} size={40} />
+            <GiHamburgerMenu className='text-color1' onClick={openDrawer} size={40} />
             <Drawer open={open} onClose={closeDrawer} className="p-4">
                 <div>
                     <h2 className='text-center'>Existing Chats</h2>
@@ -67,32 +67,32 @@ const ChatPDF = () => {
                 <DrawerDefault />
             </div>
             <div className='flex flex-col items-center justify-center gap-10 m-10'>
-                <h1 className='text-3xl font-semibold text-gray-800 dark:text-gray-200'>Upload a report</h1>
+                <h1 className='text-3xl text-color1'>Upload a report</h1>
                 <div {...getRootProps()} className="flex items-center justify-center w-full">
                     <label
                         htmlFor="dropzone-file"
-                        className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                        className="flex flex-col items-center justify-center w-full h-64 border-2 bg-color3 text-color1"
                     >
                         {uploadedFile ? (
                             <div className="flex flex-col items-center justify-center gap-3 pt-5 pb-6">
                                 <FaFilePdf size={40} />
-                                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                <p className="mb-2 text-sm ">
                                     <span className="font-semibold">{uploadedFile.name}</span>
                                 </p>
                             </div>
                         ) : (
                             <div className="flex flex-col items-center justify-center gap-3 pt-5 pb-6">
                                 <FaUpload size={40} />
-                                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                <p className="mb-2 text-sm">
                                     <span className="font-semibold">Click to upload</span> or drag and drop
                                 </p>
-                                <p className="text-xs text-gray-500 dark:text-gray-400">PDF FILE OF REPORT (MAX - 2MB)</p>
+                                <p className="text-xs">PDF FILE OF REPORT (MAX - 2MB)</p>
                             </div>
                         )}
                         <input id="dropzone-file" {...getInputProps()} className="hidden" />
                     </label>
                 </div>
-                <Button type='outlined' disabled={!submit} onClick={()=>navigate('/chatui')}>Submit</Button>
+                <Button className='text-color1 bg-color3' disabled={!submit} onClick={()=>navigate('/chatui')}>Submit</Button>
             </div>
         </>
     );
