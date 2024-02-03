@@ -27,7 +27,7 @@ const DetailsPage = () => {
     const navigate = useNavigate();
     return (
         <>
-            <div className='flex flex-col gap-24 my-10 mx-7 items'>
+            <div className='flex flex-col gap-24 my-10 mx-7 items md:mx-60'>
                 <motion.div className='flex flex-col gap-2'
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}

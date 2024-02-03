@@ -49,7 +49,7 @@ const BasicInfo = () => {
                     </Typography>
                 </div>
             )}
-            <div className='flex flex-col gap-10 my-10 mx-7'>
+            <div className='flex flex-col gap-10 my-10 mx-7 md:mx-60'>
                 <motion.div
                     className='flex flex-col gap-2'
                     initial={{ opacity: 0 }}

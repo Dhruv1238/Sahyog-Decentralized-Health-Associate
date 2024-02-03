@@ -49,7 +49,7 @@ const Cal = () => {
   return (
     <>
       {/* <Welcom /> */}
-      <div className='flex flex-col pb-20 gap-10 m-7'>
+      <div className='flex flex-col pb-20 gap-10 m-7 md:mx-60'>
         <motion.div className='flex flex-col gap-2'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -58,11 +58,11 @@ const Cal = () => {
           <Typography color='blue' className='text-xl font-medium font-inter'>Welcome to the Safe Zone!!</Typography>
           <Typography color='white' className='text-3xl font-bold font-inter'>Write to your Hearts Content</Typography>
         </motion.div>
-        <div>
+        <div className='flex justify-center'>
           <Calendar className="" onChange={onChange} value={date} />
         </div>
         {selectedDate && (
-          <div className="event-form">
+          <div className="event-form flex justify-center">
             <label>
               <div className='flex flex-col items-start gap-4'>
                 <p className='flex-1 mt-2 text-white'>For Event at {selectedDate.toDateString()} :</p>

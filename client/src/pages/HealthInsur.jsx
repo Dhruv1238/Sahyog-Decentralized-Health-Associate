@@ -134,7 +134,7 @@ const HealthInsur = () => {
                     </Typography>
                 </div>
             )}
-            <div className="flex flex-col gap-24 my-10 mx-7">
+            <div className="flex flex-col gap-24 my-10 mx-7 md:mx-60">
                 <div
                     className="flex flex-col gap-2"
                 >

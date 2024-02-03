@@ -97,7 +97,7 @@ const Landing = () => {
     return (
         <div className='flex flex-col'>
             <Navbar />
-            <div className='flex flex-col gap-16 mt-20 mx-7'>
+            <div className='flex flex-col gap-16 mt-20 mx-7 md:mx-40'>
                 <div className='flex flex-col gap-5' />
                 <div className='flex flex-col gap-5'>
                     <Typography color='white' className='text-3xl font-bold font-inter'>For You</Typography>
