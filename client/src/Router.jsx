@@ -16,6 +16,7 @@ import SOS from './pages/SOS/SOS';
 import Cal from './components/Calendar/Cal';
 import Chat from './pages/AllChat';
 import DoctorChat from './pages/DoctorChat';
+import Notes from './components/Calendar/Notes';
 
 import { Interaction } from './components/contract/Interaction';
 import { useContext } from 'react';
@@ -40,6 +41,7 @@ export const Router = () => {
                 <Route path="/sos" element={<SOS />} />
                 <Route path="/calendar" element={<Cal />} />
                 <Route path="/allchat" element={<Chat />} />
+                <Route path="/notes/:date/:title/:text" element={<Notes />} />
                 <Route path="/chat/:chatId" element={<DoctorChat />} />
             </Routes>
         </>
