@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const DetailButton = ({ text, onClick }) => {
     return (
-        <Button variant="outlined" color='white' className= "flex flex-row justify-between bg-blue-500 font-inter" onClick={onClick}>
+        <Button variant="outlined" color='white' className= "flex flex-row justify-between p-6 text-sm font-normal bg-blue-500 font-inter whitespace-nowrap" onClick={onClick}>
             {text}
             <FaChevronRight />
         </Button>
@@ -33,11 +33,11 @@ const DetailsPage = () => {
                     <Typography color='white' className='text-3xl font-bold font-inter'>Hey There!!</Typography>
                     <Typography color='blue' className='font-inter'>So tell us about yourself !!</Typography>
                 </motion.div>
-                <div className='flex flex-col gap-10 '>
+                <div className='flex flex-col gap-8'>
                     <DetailButton text='Basic Medical Details' onClick={() => navigate('/basicinfo')} />
                     <DetailButton text='Previous Diagnostic records' onClick={() => navigate('/medicaldetails')} />
                     <DetailButton text='Health Insurance Details' onClick={() => navigate('/healthinsurance')} />
-                    <Button variant="outlined" color='white' className= "bg-blue-500 font-inter" onClick={() => navigate('/landing')}>Skip</Button>
+                    <Button variant="outlined" color='white' className= "bg-blue-500 font-inter text-md" onClick={() => navigate('/landing')}>Skip</Button>
                 </div>
             </div>
         </>
