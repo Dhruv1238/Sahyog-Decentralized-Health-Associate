@@ -74,7 +74,7 @@ const Appbar = () => {
                 </Link>
             </div>
             <div className='flex gap-8 right'>
-                <Link to='/spaces'>
+                <Link to='/chat-pdf'>
                     <div
                         className='flex flex-col items-center home'
                         onClick={() => handleItemClick('spaces')}
@@ -87,7 +87,7 @@ const Appbar = () => {
                             variant='small'
                             style={getItemStyles('spaces')}
                         >
-                            Spaces
+                            Reports AI
                         </Typography>
                     </div>
                 </Link>

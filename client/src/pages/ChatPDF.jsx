@@ -12,6 +12,7 @@ import { useDropzone } from "react-dropzone";
 import ChatUI from './ChatUI';
 import axios from 'axios';
 import FormData from 'form-data';
+import Appbar from '../components/appbar/Appbar';
 
 export function DrawerDefault() {
     const navigate = useNavigate();
@@ -56,6 +57,7 @@ const ChatPDF = () => {
     const [submit, setSubmit] = useState(false);
     const [sourceId, setSourceId] = useState('');
     const [chatter, setChatter] = useState(false);
+    const [fileName, setFileName] = useState("");
 
     const handleReset = () => {
         setChatter(false);
@@ -66,6 +68,7 @@ const ChatPDF = () => {
     const onDrop = useCallback(async (acceptedFiles) => {
         try {
             console.log('Dropped files:', acceptedFiles);
+            setFileName(acceptedFiles[0].name);
             const file = acceptedFiles[0];
             const formData = new FormData();
             formData.append('file', file);
@@ -101,9 +104,9 @@ const ChatPDF = () => {
 
     return (
         <>
-            {chatter ? (<ChatUI sourceId={sourceId} />) : (
+            {chatter ? (<ChatUI sourceId={{ sourceId }} fileName={{ fileName }} />) : (
                 <>
-                    <div className='flex justify-between m-2'>
+                    <div className='flex justify-between m-2 max-h-[90vh]'>
                         <DrawerDefault />
                     </div>
                     <div className='flex flex-col gap-10 m-10 font-inter'>
@@ -145,6 +148,7 @@ const ChatPDF = () => {
                     </div>
                 </>
             )}
+            <Appbar />
         </>
     );
 };
