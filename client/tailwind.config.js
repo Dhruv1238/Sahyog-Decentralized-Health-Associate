@@ -7,7 +7,7 @@ module.exports = withMT({
       colors: {
         'color1': '#ffffff',
         'color2': '#64C2EC',
-        'color3': '#277CA5',
+        'color3': '#20ABE9',
         'color4': '#B8F5FF',
         'checkboxcolor': '#666D74',
         'bubblecolor': '#363636',
