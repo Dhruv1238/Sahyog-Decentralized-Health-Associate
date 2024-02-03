@@ -4,7 +4,6 @@ import { useAuth } from "@arcana/auth-react";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../utils/constants";
 import { useContext, createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { get } from "https";
 
 export const Interaction = createContext();
 

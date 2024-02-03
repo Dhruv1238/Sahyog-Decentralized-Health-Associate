@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button } from '@material-tailwind/react'
 import { useNavigate } from 'react-router'
+import { Interaction } from '../components/contract/Interaction'
+
 const Intro = () => {
     const [userType, setUserType] = useState('')
-    useEffect(() => {
-        if (userType) {
-            console.log(userType)
-        }
-    })
+    const {userDetails} = useContext(Interaction);
     const navigate = useNavigate()
+    useEffect(() => {
+        if(userDetails && userDetails[2]!==null){
+            navigate('/landing')
+        }
+    }, [userDetails])
     return (
         <div className='flex items-center justify-center h-screen'>
             <div className='flex flex-col items-center justify-center w-full gap-20 font-inter text-color1'>
