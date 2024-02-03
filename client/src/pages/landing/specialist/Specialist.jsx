@@ -94,12 +94,7 @@ const Specialist = () => {
                         About
                     </Typography>
                     <Typography color='gray' className='text-sm font-inter w-[350px] '>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Quisquam, voluptate.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Quisquam, voluptate.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Quisquam, voluptate.
+                        {specialists[id].about}
                     </Typography>
                 </div>
                 <div>
@@ -107,13 +102,14 @@ const Specialist = () => {
                         Qualifications
                     </Typography>
                     <Typography color='gray' className='text-sm font-inter w-[350px] '>
-                        <ul>
+                        {/* <ul>
                             <li>MBBS from AIMS Dehli</li>
                             <li>MD</li>
                             <li>DM</li>
                             <li>PhD</li>
 
-                        </ul>
+                        </ul> */}
+                        {specialists[id].qualifications}
                     </Typography>
                 </div>
                 <div>
@@ -121,13 +117,14 @@ const Specialist = () => {
                         Books and Theises
                     </Typography>
                     <Typography color='gray' className='text-sm font-inter w-[350px] '>
-                        <ul>
+                        {/* <ul>
                             <li>Book 1</li>
                             <li>Book 2</li>
                             <li>Book 3</li>
                             <li>Book 4</li>
 
-                        </ul>
+                        </ul> */}
+                        {specialists[id].books}
                     </Typography>
                 </div>
                 <div>
@@ -137,9 +134,9 @@ const Specialist = () => {
                     <Typography color='gray' className='text-sm font-inter w-[350px] '>
                         <ul>
                             <li onClick={handlePhoneClick} style={{ cursor: 'pointer' }}>
-                                Phone Number: 1234567890
+                                Phone Number: {specialists[id].phone}
                             </li>
-                            <li>Email: abc@abc.com </li>
+                            <li>Email: {specialists[id].email} </li>
                         </ul>
                     </Typography>
                 </div>
