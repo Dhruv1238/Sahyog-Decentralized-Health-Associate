@@ -87,7 +87,7 @@ const Appbar = () => {
                             variant='small'
                             style={getItemStyles('spaces')}
                         >
-                            Reports AI
+                            SARTHI
                         </Typography>
                     </div>
                 </Link>
