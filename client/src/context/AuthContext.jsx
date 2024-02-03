@@ -6,9 +6,11 @@ import { Spinner, Typography } from "@material-tailwind/react";
 const Login = ({ onLoginNavigateTo, heading }) => {
     const navigate = useNavigate();
     const auth = useAuth();
+
     useEffect(() => {
         console.log("auth in Login.js", auth);
         if (auth.isLoggedIn) {
+            console.log(auth);
             navigate(onLoginNavigateTo);
         }
     }, [auth, navigate, onLoginNavigateTo]);
@@ -16,8 +18,8 @@ const Login = ({ onLoginNavigateTo, heading }) => {
     return (
         <>
             {auth.loading && (
-                <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center flex-col">
-                    <Spinner color="white" className="h-12 w-12" />
+                <div className="fixed top-0 left-0 flex flex-col items-center justify-center w-screen h-screen bg-black bg-opacity-50 backdrop-blur-md">
+                    <Spinner color="white" className="w-12 h-12" />
                     <Typography color="white" className="ml-4">
                         Loading...
                     </Typography>

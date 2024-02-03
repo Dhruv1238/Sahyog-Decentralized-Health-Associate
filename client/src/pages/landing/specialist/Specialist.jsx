@@ -152,6 +152,11 @@ const Specialist = () => {
                                 Book an Appointment
                             </div>
                         </Button>
+                        <Button className='border-2 border-[#65ADE1]' variant='outlined' size='sm' onClick={handleOnChat}>
+                            <div className='text-white'>
+                                Chat
+                            </div>
+                        </Button>
                     </div>
                 </div>
             </div>

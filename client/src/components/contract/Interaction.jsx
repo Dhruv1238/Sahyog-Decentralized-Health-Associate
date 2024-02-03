@@ -4,6 +4,8 @@ import { useAuth } from "@arcana/auth-react";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../utils/constants";
 import { useContext, createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { db } from "../FirebaseSDK";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export const Interaction = createContext();
 
@@ -12,8 +14,24 @@ export const InteractionProvider = ({ children }) => {
     const { user, isLoggedIn, connect } = useAuth();
     const [loading, setLoading] = useState(false);
     const [userData, setUserData] = useState({});
+    const [userType, setUserType] = useState(null);
 
     const navigate = useNavigate();
+    const addTOFirebase = async (user) => {
+        const userDocRef = doc(db, 'users', user.publicKey);
+        const docSnapshot = await getDoc(userDocRef);
+        if (!docSnapshot.exists()) {
+            await setDoc(userDocRef, {
+                userID: user.publicKey,
+                email: user.email,
+                name: user.name,
+            });
+            console.log("User added to firestore");
+        }
+        else {
+            console.log("User already exists");
+        }
+    }
 
     // if (!isLoggedIn) {
     //     connect();
@@ -21,6 +39,7 @@ export const InteractionProvider = ({ children }) => {
 
     useEffect(() => {
         if (user) {
+            addTOFirebase(user);
             setUserAddress(user.address);
             console.log(user);
         }
@@ -79,8 +98,6 @@ export const InteractionProvider = ({ children }) => {
             console.log(err);
         }
     }
-
-
 
     const getUserData = async () => {
         try {
