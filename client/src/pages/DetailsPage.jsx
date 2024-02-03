@@ -39,6 +39,7 @@ const DetailsPage = () => {
                     <DetailButton text='Basic Medical Details' onClick={() => navigate('/basicinfo')} />
                     <DetailButton text='Previous Diagnostic records' onClick={() => navigate('/medicaldetails')} />
                     <DetailButton text='Health Insurance Details' onClick={() => navigate('/healthinsurance')} />
+                    <Button variant="outlined" color='white' className= "bg-blue-500 font-inter" onClick={() => navigate('/landing')}>Skip</Button>
                 </div>
             </div>
         </>
