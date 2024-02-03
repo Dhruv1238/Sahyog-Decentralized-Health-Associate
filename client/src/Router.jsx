@@ -6,6 +6,9 @@ import Intro from './pages/Intro';
 import ChatPDF from './pages/ChatPDF';
 import ChatUI from './pages/ChatUI';
 import ChatReport from './pages/ChatReport';
+import BasicInfo from './pages/BasicInfo';
+import Medical from './pages/Medical';
+import HealthInsur from './pages/HealthInsur';
 
 export const Router = () => {
     return (
@@ -18,6 +21,9 @@ export const Router = () => {
                 <Route path="/chat-pdf" element={<ChatPDF />} />
                 <Route path="/chat-ui" element={<ChatUI />} />
                 <Route path='/chatreport' element={<ChatReport />} />
+                <Route path='/basicinfo' element={<BasicInfo />} />
+                <Route path='/medicaldetails' element={<Medical />} />
+                <Route path='/healthinsurance' element={<HealthInsur />} />
             </Routes>
         </>
     );
