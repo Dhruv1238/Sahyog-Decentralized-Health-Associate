@@ -9,6 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaFilePdf, FaUpload } from "react-icons/fa";
 import { useDropzone } from "react-dropzone";
+import ChatUI from './ChatUI';
+import axios from 'axios';
+import FormData from 'form-data';
 
 export function DrawerDefault() {
     const navigate = useNavigate();
@@ -19,7 +22,7 @@ export function DrawerDefault() {
 
     return (
         <React.Fragment>
-            <GiHamburgerMenu className='text-color1' onClick={openDrawer} size={40} />
+            <GiHamburgerMenu className='m-2 text-color1' onClick={openDrawer} size={30} />
             <Drawer open={open} onClose={closeDrawer} className="p-4">
                 <div>
                     <h2 className='text-center'>Existing Chats</h2>
@@ -51,49 +54,97 @@ const ChatPDF = () => {
     const navigate = useNavigate();
     const [uploadedFile, setUploadedFile] = useState(null);
     const [submit, setSubmit] = useState(false);
+    const [sourceId, setSourceId] = useState('');
+    const [chatter, setChatter] = useState(false);
 
-    const onDrop = useCallback(acceptedFiles => {
-        console.log('Dropped files:', acceptedFiles);
-        const file = acceptedFiles[0];
-        setUploadedFile(file);
-        setSubmit(true);
+    const handleReset = () => {
+        setChatter(false);
+        setUploadedFile(null);
+        setSubmit(false);
+    }
+
+    const onDrop = useCallback(async (acceptedFiles) => {
+        try {
+            console.log('Dropped files:', acceptedFiles);
+            const file = acceptedFiles[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const responseFile = await axios.post('https://api.chatpdf.com/v1/sources/add-file', formData, {
+                headers: {
+                    'x-api-key': import.meta.env.VITE_CHATPDF_API_KEY,
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            console.log("Source ID:", responseFile.data.sourceId);
+            setUploadedFile(file);
+            setSourceId(responseFile.data.sourceId);
+            setSubmit(true);
+        } catch (error) {
+            console.error('Error:', error.message);
+            console.error('Response:', error.response?.data);
+        }
     }, []);
+
+    const handleSummarize = () => {
+        navigate('/chat-ui');
+    }
+
+    const handleChat = () => {
+        setChatter(true);
+        // navigate('/chat-ui');
+    }
+
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
     return (
         <>
-            <div className='flex justify-between m-2'>
-                <DrawerDefault />
-            </div>
-            <div className='flex flex-col items-center justify-center gap-10 m-10'>
-                <h1 className='text-3xl text-color1'>Upload a report</h1>
-                <div {...getRootProps()} className="flex items-center justify-center w-full">
-                    <label
-                        htmlFor="dropzone-file"
-                        className="flex flex-col items-center justify-center w-full h-64 border-2 bg-color3 text-color1"
-                    >
-                        {uploadedFile ? (
-                            <div className="flex flex-col items-center justify-center gap-3 pt-5 pb-6">
-                                <FaFilePdf size={40} />
-                                <p className="mb-2 text-sm ">
-                                    <span className="font-semibold">{uploadedFile.name}</span>
-                                </p>
-                            </div>
-                        ) : (
-                            <div className="flex flex-col items-center justify-center gap-3 pt-5 pb-6">
-                                <FaUpload size={40} />
-                                <p className="mb-2 text-sm">
-                                    <span className="font-semibold">Click to upload</span> or drag and drop
-                                </p>
-                                <p className="text-xs">PDF FILE OF REPORT (MAX - 2MB)</p>
-                            </div>
-                        )}
-                        <input id="dropzone-file" {...getInputProps()} className="hidden" />
-                    </label>
-                </div>
-                <Button className='text-color1 bg-color3' disabled={!submit} onClick={()=>navigate('/chatui')}>Submit</Button>
-            </div>
+            {chatter ? (<ChatUI sourceId={sourceId} />) : (
+                <>
+                    <div className='flex justify-between m-2'>
+                        <DrawerDefault />
+                    </div>
+                    <div className='flex flex-col gap-10 m-10 font-inter'>
+                        <div className='flex flex-col gap-2'>
+                            <h1 className='text-2xl text-color1'>Upload a report</h1>
+                            <p className='text-sm text-gray-600'>Upload a report to get a summary or chat with the bot</p>
+                        </div>
+                        <div {...getRootProps()} className="flex items-center justify-center w-full">
+                            <label
+                                htmlFor="dropzone-file"
+                                className="flex flex-col items-center justify-center w-full h-64 p-4 text-white border-2 border-gray-600 border-dashed rounded-xl"
+                            >
+                                {uploadedFile ? (
+                                    <div className="flex flex-col items-center justify-center gap-3 pt-5 pb-6">
+                                        <FaFilePdf size={40} />
+                                        <p className="mb-2 text-sm ">
+                                            <span className="font-semibold">{uploadedFile.name}</span>
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <div className="flex flex-col items-center justify-center gap-6 pt-5 pb-6">
+                                        <FaUpload size={60} />
+                                        <div className='flex flex-col gap-2 text-center'>
+                                            <p className="text-sm">
+                                                <span className="text-md">Click to upload or drag and drop</span>
+                                            </p>
+                                            <p className="text-sm">PDF FILE OF REPORT (MAX - 32MB)</p>
+                                        </div>
+                                    </div>
+                                )}
+                                <input id="dropzone-file" {...getInputProps()} className="hidden" />
+                            </label>
+                        </div>
+                        <div className='flex justify-between w-full'>
+                            <Button className='p-3 text-color1 bg-color3 font-inter' disabled={!submit} onClick={handleSummarize}>Summarize</Button>
+                            <Button className='text-color1 bg-color3 font-inter' disabled={!submit} onClick={handleReset}>Reset</Button>
+                            <Button className='text-color1 bg-color3 font-inter' disabled={!submit} onClick={handleChat}>Chat</Button>
+                        </div>
+                    </div>
+                </>
+            )}
         </>
     );
 };
