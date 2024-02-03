@@ -17,7 +17,7 @@ const BasicInfo = () => {
     const [userEmail, setUserEmail] = useState(user?.email);
     const [userGender, setUserGender] = useState("");
     const [userPhone, setUserPhone] = useState("");
-    const [userAge, setUserAge] = useState('');
+    const [userAge, setUserAge] = useState();
     
     useEffect(() => {
         setUserName(user?.name);
@@ -77,7 +77,7 @@ const BasicInfo = () => {
                                 className='text-white border-2'
                             />
                             <Input
-                                type='text'
+                                type='number'
                                 onChange={(e) => setUserAge(e.target.value)}
                                 value={userAge}
                                 size='lg'
