@@ -9,7 +9,7 @@ import { Interaction } from '../components/contract/Interaction';
 import { useContext } from 'react';
 import { useAuth } from '@arcana/auth-react';
 import { MdDocumentScanner } from "react-icons/md";
-// import SahyogCard from '../components/Sahyogcard/SahyogCard';
+import SahyogCard from '../components/Sahyogcard/SahyogCard';
 
 
 
@@ -43,7 +43,7 @@ const Profile = () => {
 
     console.log(user.address);
 
-    const { userData, userDetails, stopSharingData, startSharingData, loading, deleteUserData} = useContext(Interaction);
+    const { userData, userDetails, stopSharingData, startSharingData, loading, deleteUserData, getUserData} = useContext(Interaction);
     const [age, gender, name, phoneNumber] = userDetails || [];
 
     const initialProfileData = {
@@ -51,7 +51,6 @@ const Profile = () => {
         email: user.email,
         age: age && age.toNumber(),
         contact: phoneNumber,
-        emergencyContact: 'Neil Carnac',
     };
 
 
@@ -71,6 +70,7 @@ const Profile = () => {
 
     useEffect(() => {
         console.log(userData);
+        getUserData();
     }, [])
 
 
@@ -96,7 +96,7 @@ const Profile = () => {
                 </motion.div>
                 <div className='flex flex-col gap-10'>
                     <div className='flex flex-col gap-3'>
-                        {/* <SahyogCard address={user.address} name={name} number={phoneNumber} age={age.toNumber()} gender={gender} /> */}
+                        <SahyogCard address={user.address} name={name} number={phoneNumber} age={age.toNumber()} gender={gender} />
                         <div className='flex flex-col gap-1 mt-10'>
                             <ProfileData
                                 label='Name'
@@ -115,12 +115,6 @@ const Profile = () => {
                             <ProfileData
                                 label='Age'
                                 content={profileData.age}
-                                isEditable={isEditable}
-                                onChange={handleChange}
-                            />
-                            <ProfileData
-                                label='Emergency Contact'
-                                content={profileData.contact}
                                 isEditable={isEditable}
                                 onChange={handleChange}
                             />
@@ -143,17 +137,17 @@ const Profile = () => {
                         <Button size='sm' color='blue' className='text-md' onClick={() => startSharingData()}>
                             Allow Access
                         </Button>
-                        <Button size='sm' color='blue' className='text-md' onClick={() => deleteUserData(user.address)}>
-                            Delete User Data
-                        </Button>
                     </div>
+                    <Button size='sm' color='red' className='text-md' fullWidth onClick={() => deleteUserData(user.address)}>
+                        Delete User Data
+                    </Button>
                     <p className='text-white grid grid-cols-3 gap-28 self-center min-h-[34rem]'>
                         {/* {userData[0] === 'This user is not sharing their Medical Records' ? "Please Allow access to view files here" : "Please Allow access to view records here"} */}
                         {Array.isArray(userData) ? userData.map((url) => (
                             <IconButton variant='text' className='flex justify-center items-center' onClick={() => window.open(url, "_blank")}>
                                 <MdDocumentScanner className=' text-color2 w-20 h-20' />
                             </IconButton>
-                        )) : "Please add some files"}
+                        )) : "Please add some files or You have revoked file access"}
                     </p>
                 </div>
             </div>

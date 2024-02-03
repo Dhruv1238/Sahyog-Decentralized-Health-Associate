@@ -6,6 +6,7 @@ import { useContext, createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../FirebaseSDK";
 import { doc, getDoc, setDoc } from "firebase/firestore";
+import { get } from "http";
 
 export const Interaction = createContext();
 
@@ -134,6 +135,7 @@ export const InteractionProvider = ({ children }) => {
             console.log(receipt.transactionHash);
             getUserData(userAddress)
             setLoading(false)
+            getUserData();
             navigate('/profile')
         }
         catch (err) {
@@ -149,6 +151,7 @@ export const InteractionProvider = ({ children }) => {
             const receipt = await transaction.wait();
             console.log(receipt.transactionHash);
             setLoading(false)
+            getUserData();
             navigate('/profile')
         }
         catch (err) {
@@ -164,6 +167,7 @@ export const InteractionProvider = ({ children }) => {
             const receipt = await transaction.wait();
             console.log(receipt.transactionHash);
             setLoading(false)
+            getUserData();
             navigate('/profile')
         }
         catch (err) {
@@ -178,7 +182,7 @@ export const InteractionProvider = ({ children }) => {
 
 
     return (
-        <Interaction.Provider value={{ storeUserDetails, loading, storeMedicalDetails, storeInsuranceDetails, userData, userDetails, stopSharingData, startSharingData, deleteUserData }}>
+        <Interaction.Provider value={{ storeUserDetails, loading, storeMedicalDetails, storeInsuranceDetails, userData, userDetails, stopSharingData, startSharingData, deleteUserData, getUserData }}>
             {children}
         </Interaction.Provider>
     );
