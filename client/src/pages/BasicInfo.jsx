@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@arcana/auth-react';
 import { Interaction } from '../components/contract/Interaction';
 
-
 const BasicInfo = () => {
     const { form1, updateFormData } = useFormContext();
     const navigate = useNavigate();
@@ -67,8 +66,8 @@ const BasicInfo = () => {
         <>
             {loading && (
                 <div className="fixed top-0 left-0 z-[99999] w-screen h-screen flex flex-col justify-center items-center backdrop-blur-md bg-black bg-opacity-50">
-                    <Spinner color="blue" className='h-12 w-12' />
-                    <Typography color="white" className=" text-xl">
+                    <Spinner color="blue" className='w-12 h-12' />
+                    <Typography color="white" className="text-xl ">
                         Uploading...
                     </Typography>
                 </div>
