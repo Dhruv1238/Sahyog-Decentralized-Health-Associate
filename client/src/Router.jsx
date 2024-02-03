@@ -8,7 +8,7 @@ import ChatUI from './pages/ChatUI';
 import ChatReport from './pages/ChatReport';
 import BasicInfo from './pages/BasicInfo';
 import Medical from './pages/Medical';
-// import HealthInsur from './pages/HealthInsur';
+import HealthInsur from './pages/HealthInsur';
 import Landing from './pages/landing/Landing';
 import Specialist from './pages/landing/specialist/Specialist';
 import Profile from './pages/Profile';
@@ -25,7 +25,7 @@ export const Router = () => {
                 <Route path="/spaces" element={<ChatPDF />} />
                 <Route path='/basicinfo' element={<BasicInfo />} />
                 <Route path='/medicaldetails' element={<Medical />} />
-                {/* <Route path='/healthinsurance' element={<HealthInsur />} /> */}
+                <Route path='/healthinsurance' element={<HealthInsur />} />
                 <Route path='/landing' element={<Landing />} />
                 <Route path="/specialist/:id" element={<Specialist />} />
                 <Route path='/profile' element={<Profile />} />

@@ -4,10 +4,12 @@ import { Typography } from '@material-tailwind/react'
 import { Button } from '@material-tailwind/react';
 import { FaChevronRight } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
+import { Interaction } from '../components/contract/Interaction';
+import { useContext } from 'react';
 
 const DetailButton = ({ text, onClick }) => {
     return (
-        <Button variant="outlined" color='white' className= "flex flex-row justify-between p-6 text-sm font-normal bg-blue-500 font-inter whitespace-nowrap" onClick={onClick}>
+        <Button variant="outlined" color='white' className="flex flex-row justify-between p-6 text-sm font-normal bg-blue-500 font-inter whitespace-nowrap" onClick={onClick}>
             {text}
             <FaChevronRight />
         </Button>
@@ -15,6 +17,7 @@ const DetailButton = ({ text, onClick }) => {
 }
 
 const DetailsPage = () => {
+    const { user } = useContext(Interaction);
     // const { form1, form2, form3, updateFormData } = useFormContext();
     // useEffect(() => {
     //     console.log(form1);
@@ -37,7 +40,7 @@ const DetailsPage = () => {
                     <DetailButton text='Basic Medical Details' onClick={() => navigate('/basicinfo')} />
                     <DetailButton text='Previous Diagnostic records' onClick={() => navigate('/medicaldetails')} />
                     <DetailButton text='Health Insurance Details' onClick={() => navigate('/healthinsurance')} />
-                    <Button variant="outlined" color='white' className= "bg-blue-500 font-inter text-md" onClick={() => navigate('/landing')}>Skip</Button>
+                    <Button variant="outlined" color='white' className="bg-blue-500 font-inter text-md" onClick={() => navigate('/landing')}>Skip</Button>
                 </div>
             </div>
         </>

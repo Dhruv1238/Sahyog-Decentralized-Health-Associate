@@ -19,7 +19,7 @@ const DropBox = ({ onFilesDrop, onDeleteFile }) => {
         setPreviewImages(updatedFiles);
         onDeleteFile(updatedFiles.map((file) => file.file));
         setHasFiles(updatedFiles.length > 0);
-    };
+    }
 
     const { getRootProps, getInputProps } = useDropzone({
         accept: 'application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document',

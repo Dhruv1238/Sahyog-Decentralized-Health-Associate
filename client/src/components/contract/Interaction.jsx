@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 
 export const Interaction = createContext();
 
-
 export const InteractionProvider = ({ children }) => {
     const [userAddress, setUserAddress] = useState("");
     const { user, isLoggedIn, connect } = useAuth();
