@@ -9,6 +9,7 @@ import ChatReport from './pages/ChatReport';
 import BasicInfo from './pages/BasicInfo';
 import Medical from './pages/Medical';
 import HealthInsur from './pages/HealthInsur';
+import Landing from './pages/landing/Landing';
 
 export const Router = () => {
     return (
@@ -24,6 +25,7 @@ export const Router = () => {
                 <Route path='/basicinfo' element={<BasicInfo />} />
                 <Route path='/medicaldetails' element={<Medical />} />
                 <Route path='/healthinsurance' element={<HealthInsur />} />
+                <Route path='/landing' element={<Landing />} />
             </Routes>
         </>
     );
