@@ -83,7 +83,7 @@ const PersonCard = ({ photoSrc, name, degree, clickFunc }) => {
 const Landing = () => {
 
     const handleClick = () => {
-        navigate('/spaces')
+        navigate('/chat-pdf')
     }
     // const videoUrl = 'https://www.youtube.com/watch?v=QFbupLSlPLE&pp=ygUNeW9nYSBhbmQgbGlmZQ%3D%3D';
     //   const thumbnailUrl = 'URL_TO_THUMBNAIL_IMAGE';
@@ -102,7 +102,7 @@ const Landing = () => {
                 <div className='flex flex-col gap-5'>
                     <Typography color='white' className='text-3xl font-bold font-inter'>For You</Typography>
                     <div className='rounded-[20px]' id='banner'>
-                        <div className='flex items-center justify-between h-full px-5'>
+                        <div className='flex items-center justify-between h-full px-5 z-0'>
                             {/* <div className='flex flex-col gap-3 m-1'>
                                 <div>
                                     <Typography color='white' className='text-xl font-bold font-inter'>
