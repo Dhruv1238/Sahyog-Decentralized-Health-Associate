@@ -5,6 +5,7 @@ import DetailsPage from './pages/DetailsPage';
 import Intro from './pages/Intro';
 import ChatPDF from './pages/ChatPDF';
 import ChatUI from './pages/ChatUI';
+import ChatReport from './pages/ChatReport';
 
 export const Router = () => {
     return (
@@ -16,7 +17,7 @@ export const Router = () => {
                 <Route path="/intro" element={<Intro />} />
                 <Route path="/chat-pdf" element={<ChatPDF />} />
                 <Route path="/chat-ui" element={<ChatUI />} />
-                
+                <Route path='/chatreport' element={<ChatReport />} />
             </Routes>
         </>
     );

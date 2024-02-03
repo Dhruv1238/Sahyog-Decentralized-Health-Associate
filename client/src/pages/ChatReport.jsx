@@ -7,6 +7,7 @@ export default function ChatReport() {
     const [content, setContent] = useState();
     const [sourceId, setSourceId] = useState();
     const [reply, setReply] = useState();
+    const [messages, setMessages] = useState();
 
     const handleFileSelect = (event) => {
         setSelectedFile(event.target.files[0]);
@@ -19,6 +20,8 @@ export default function ChatReport() {
         const options = {
             headers: {
                 "x-api-key": "sec_rUHFJFZAVg460ujkeAczOt9NjgcXqbQ7",
+                // Note: getHeaders() is not a function in the browser version of 'form-data'.
+                // You might need to manually set the 'Content-Type' header to 'multipart/form-data' here.
             },
         };
 
@@ -60,6 +63,7 @@ export default function ChatReport() {
             .post("https://api.chatpdf.com/v1/chats/message", data, options)
             .then((response) => {
                 console.log("Response:", response.data);
+                setMessages([...messages, {role: "user", content: content}, {role: "assistant", content: response.data.messages[0].content}]);
                 const reply = response.data;
                 setReply(reply);
 
@@ -71,11 +75,11 @@ export default function ChatReport() {
     }
 
     return (
-        <div>
+        <div className='bg-white'>
             <input type="file" onChange={handleFileSelect} />
             <button onClick={sendFile}>Upload</button>
             <div>ChatReport</div>
-            <form onSubmit={(e) => sendMessages(e)}>
+            <form onSubmit={(e)=> sendMessages(e)}>
                 {sourceId}
                 <label>
                     Content:
@@ -87,7 +91,10 @@ export default function ChatReport() {
                 </label>
                 <input type="submit" value="Submit" />
             </form>
-            {reply}
+            {messages?.map((message, index) => (
+                <p key={index}>{message.role}: {message.content}</p>
+            ))}
+            
         </div>
     );
 }
