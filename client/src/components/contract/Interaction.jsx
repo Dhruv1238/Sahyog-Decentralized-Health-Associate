@@ -181,7 +181,7 @@ export const InteractionProvider = ({ children }) => {
 
 
     return (
-        <Interaction.Provider value={{ storeUserDetails, loading, storeMedicalDetails, storeInsuranceDetails, userData, userDetails, stopSharingData, startSharingData, deleteUserData, getUserData }}>
+        <Interaction.Provider value={{ storeUserDetails, loading, storeMedicalDetails, storeInsuranceDetails, userData, userDetails, stopSharingData, startSharingData, deleteUserData, getUserData, setUserType, userType }}>
             {children}
         </Interaction.Provider>
     );
