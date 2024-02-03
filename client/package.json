@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@arcana/auth": "^1.0.3",
+    "@arcana/auth-react": "^0.0.3",
     "@material-tailwind/react": "^2.1.8",
     "axios": "^1.6.7",
     "form-data": "^4.0.0",
