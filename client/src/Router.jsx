@@ -21,9 +21,7 @@ export const Router = () => {
                 <Route path="/login" element={<Login onLoginNavigateTo="/intro" />} />
                 <Route path="/details" element={<DetailsPage />} />
                 <Route path="/intro" element={<Intro />} />
-                <Route path="/chat-pdf" element={<ChatPDF />} />
-                <Route path="/chat-ui" element={<ChatUI />} />
-                <Route path='/chatreport' element={<ChatReport />} />
+                <Route path="/spaces" element={<ChatPDF />} />
                 <Route path='/basicinfo' element={<BasicInfo />} />
                 {/* <Route path='/medicaldetails' element={<Medical />} /> */}
                 {/* <Route path='/healthinsurance' element={<HealthInsur />} /> */}
