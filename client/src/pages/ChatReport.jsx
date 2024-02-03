@@ -19,8 +19,6 @@ export default function ChatReport() {
         const options = {
             headers: {
                 "x-api-key": "sec_rUHFJFZAVg460ujkeAczOt9NjgcXqbQ7",
-                // Note: getHeaders() is not a function in the browser version of 'form-data'.
-                // You might need to manually set the 'Content-Type' header to 'multipart/form-data' here.
             },
         };
 
@@ -77,7 +75,7 @@ export default function ChatReport() {
             <input type="file" onChange={handleFileSelect} />
             <button onClick={sendFile}>Upload</button>
             <div>ChatReport</div>
-            <form onSubmit={(e)=> sendMessages(e)}>
+            <form onSubmit={(e) => sendMessages(e)}>
                 {sourceId}
                 <label>
                     Content:
