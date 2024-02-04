@@ -106,9 +106,9 @@ const ChatPDF = () => {
     return (
         <>{
             aiType === '' ? (<>
-                <div className='flex flex-row gap-10 m-10 font-inter items-center justify-center h-screen'>
-                    <Button className='text-color1 bg-color3 font-inter' onClick={() => setAiType("chat")}>Chat Using Report PDF</Button>
-                    <Button className='text-color1 bg-color3 font-inter' onClick={handleSummarize}>MedMatch Concierge</Button>
+                <div className='flex flex-col gap-10 md:gap-16 m-10 font-inter items-center justify-center h-[80vh] md:mx-64'>
+                    <Button className='text-color1 bg-color3 font-inter' fullWidth onClick={() => setAiType("chat")}>Chat Using Report PDF</Button>
+                    <Button className='text-color1 bg-color3 font-inter' fullWidth onClick={handleSummarize}>MedMatch Concierge</Button>
                 </div>
             </>) : aiType === 'chat' && (<>
                 {(chatter ? (<ChatUI sourceId={{ sourceId }} fileName={{ fileName }} />) : (

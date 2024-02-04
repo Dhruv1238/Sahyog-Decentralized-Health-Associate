@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './Cal.css';
@@ -8,6 +8,9 @@ import { motion } from 'framer-motion';
 // import Welcom from './Welcom';
 import { useNavigate } from 'react-router-dom';
 import Appbar from '../appbar/Appbar';
+import { collection, addDoc,  getDocs} from "firebase/firestore"; 
+import { db } from '../FirebaseSDK';
+
 const Cal = () => {
   const [date, setDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
@@ -28,23 +31,41 @@ const Cal = () => {
     setSelectedDate(newDate);
   };
 
-  const handleEventAdd = () => {
+  const handleEventAdd = async () => {
     if (selectedDate && eventText.trim() !== '' && eventTitle.trim() !== '') {
-      // Add the event to the list
-      setEvents((prevEvents) => [
-        ...prevEvents,
-        {
-          date: selectedDate.toDateString(),
-          title: eventTitle,
-          text: eventText,
-        },
-      ]);
-      // Clear input and selected date after adding the event
-      setEventTitle('');
-      setEventText('');
-      setSelectedDate(null);
+      const newEvent = {
+        date: selectedDate.toDateString(),
+        title: eventTitle,
+        text: eventText,
+      };
+
+      try {
+        const docRef = await addDoc(collection(db, "events"), newEvent);
+        console.log("Document written with ID: ", docRef.id);
+        setEvents((prevEvents) => [
+          ...prevEvents,
+          newEvent,
+        ]);
+        setEventTitle('');
+        setEventText('');
+        setSelectedDate(null);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
     }
   };
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const querySnapshot = await getDocs(collection(db, "events"));
+      const events = querySnapshot.docs.map(doc => doc.data());
+      setEvents(events);
+    };
+
+    console.log('events',events);
+  
+    fetchEvents();
+  }, []);
 
   return (
     <>
@@ -107,8 +128,8 @@ const Cal = () => {
                         <p className='pt-1 font-normal' >{event.date}</p>
                       </div>
                       <div className='flex flex-col items-start'>
-                        <div className='items-start flex-1 pt-3 pl-3 text-lg font-medium' id='etitle'>
-                          <p>{event.title}</p>
+                        <div className='items-start flex-1 pt-3 pl-3 text-lg text-start font-medium' id='etitle'>
+                          <p>{event.title.length>24? `${event.title.substring(0, 25)}..` : event.title}</p>
                         </div>
                         <div className='items-start pl-3 mb-3 text-sm font-medium text-gray-500 flex-2 ' id='etext'>
                           <p>{event.text.length > 24 ? `${event.text.substring(0, 25)}..` : event.text}</p>

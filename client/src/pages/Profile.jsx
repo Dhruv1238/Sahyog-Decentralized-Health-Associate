@@ -41,7 +41,7 @@ const Profile = () => {
 
     const { user } = useAuth();
 
-    console.log(user.address);
+    // console.log(user.address);
 
     const { userData, userDetails, stopSharingData, startSharingData, loading, deleteUserData, getUserData} = useContext(Interaction);
     const [age, gender, name, phoneNumber] = userDetails || [];
