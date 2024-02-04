@@ -105,13 +105,18 @@ const ChatBlock = ({ chat, user }) => {
     const handleChatClick = () => {
         navigate(`/chat/${chat.id}`);
     };
+    useEffect(() => {
+        console.log("Chat:", chat);
+        console.log("User:", user);
+        
+    })
 
     return (
         <div className="flex items-center justify-between p-4 border-b border-gray-500">
             <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
                 <div>
-                    <h3 className="text-lg font-semibold">Doctor John</h3>
+                    <h3 className="text-lg font-semibold">{}</h3>
                     <p className="text-gray-500">Last message goes here</p>
                 </div>
             </div>

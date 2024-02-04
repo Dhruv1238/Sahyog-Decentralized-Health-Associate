@@ -40,28 +40,26 @@ const DoctorChat = () => {
     }, [chatId, user]);
 
     useEffect(() => {
-        console.log('Sender: ', sender);
-        console.log('Receiver: ', receiver);
-        const chatQuery = query(collection(db, 'chats'), where('id', '==', chatId));
-        const unsubscribe = onSnapshot(chatQuery, (snapshot) => {
-            const chatData = snapshot.docs[0]?.data();
+        const chatDocRef = doc(db, 'chats', chatId);
+        const chatDocSnapshot = onSnapshot(chatDocRef, (chatDoc) => {
+            const chatData = chatDoc.data();
             const messagesCollection = chatData?.messages;
 
             if (messagesCollection) {
-                const messagesQuery = query(collection(db, 'chats', chatId, 'messages'));
+                const messagesQuery = query(collection(db, 'chats', chatId, 'messages'), orderBy('timestamp'));
                 const messagesUnsubscribe = onSnapshot(messagesQuery, (messagesSnapshot) => {
                     const messagesData = messagesSnapshot.docs.map((doc) => doc.data());
                     setMessages(messagesData);
                 });
 
+                messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+
                 return () => messagesUnsubscribe();
             }
         });
 
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-
-        return () => unsubscribe();
-    }, [chatId]);
+        return () => chatDocSnapshot();
+    }, [chatId, user]);
 
     const handleSendMessage = async () => {
         console.log('Sender: ', sender);
