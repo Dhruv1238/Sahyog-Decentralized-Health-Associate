@@ -16,7 +16,7 @@ import SahyogCard from '../components/Sahyogcard/SahyogCard';
 const ProfileData = ({ label, content, isEditable, onChange }) => {
 
     return (
-        <div className='flex flex-col gap-2'>
+        <div className='flex flex-col gap-2 '>
             <Typography color='white' className='text-lg font-bold text-blue-500 font-inter'>
                 {label}
             </Typography>
@@ -83,7 +83,7 @@ const Profile = () => {
                 </Typography>
             </div>
         )}
-            <div className='flex flex-col gap-10 my-10 mx-7'>
+            <div className='flex flex-col gap-10 my-10 mx-7 md:mx-60'>
                 <motion.div
                     className='flex flex-col gap-2'
                     initial={{ opacity: 0 }}
