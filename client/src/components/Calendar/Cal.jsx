@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 // import Welcom from './Welcom';
 import { useNavigate } from 'react-router-dom';
 import Appbar from '../appbar/Appbar';
-import { collection, addDoc,  getDocs} from "firebase/firestore"; 
+import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db } from '../FirebaseSDK';
 
 const Cal = () => {
@@ -62,8 +62,8 @@ const Cal = () => {
       setEvents(events);
     };
 
-    console.log('events',events);
-  
+    console.log('events', events);
+
     fetchEvents();
   }, []);
 
@@ -76,8 +76,8 @@ const Cal = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <Typography color='blue' className='text-xl font-medium font-inter'>Welcome to the Safe Zone!!</Typography>
-          <Typography color='white' className='text-3xl font-bold font-inter'>Write to your Hearts Content</Typography>
+          <Typography color='blue' className='text-xl font-medium font-inter'>Welcome to your calendar!!</Typography>
+          <Typography color='white' className='text-3xl font-bold font-inter'>Keep Track of your MediMatches!!</Typography>
         </motion.div>
         <div className='flex justify-center'>
           <Calendar className="" onChange={onChange} value={date} />
@@ -106,9 +106,14 @@ const Cal = () => {
                     onChange={(e) => setEventText(e.target.value)}
                   />
                 </div>
-                <Button className='text-white' color='blue' onClick={handleEventAdd}>
-                  Add
-                </Button>
+                <div className='flex flex-row gap-4 mt-5 text-white'>
+                  <Button className='text-white' color='blue' onClick={handleEventAdd}>
+                    Add
+                  </Button>
+                  <Button className='text-white' color='blue' onClick={()=>setSelectedDate(null)}>
+                    Cancel
+                  </Button>
+                </div>
               </div>
             </label>
           </div>
@@ -129,7 +134,7 @@ const Cal = () => {
                       </div>
                       <div className='flex flex-col items-start'>
                         <div className='items-start flex-1 pt-3 pl-3 text-lg text-start font-medium' id='etitle'>
-                          <p>{event.title.length>24? `${event.title.substring(0, 25)}..` : event.title}</p>
+                          <p>{event.title.length > 24 ? `${event.title.substring(0, 25)}..` : event.title}</p>
                         </div>
                         <div className='items-start pl-3 mb-3 text-sm font-medium text-gray-500 flex-2 ' id='etext'>
                           <p>{event.text.length > 24 ? `${event.text.substring(0, 25)}..` : event.text}</p>
