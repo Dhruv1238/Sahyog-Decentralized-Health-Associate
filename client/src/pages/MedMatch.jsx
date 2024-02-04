@@ -5,6 +5,8 @@ import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/ge
 import { Button, Typography, Spinner } from "@material-tailwind/react";
 import Appbar from '../components/appbar/Appbar';
 import ReactMarkdown from 'react-markdown';
+import { collection, addDoc } from "firebase/firestore";
+
 
 const MODEL_NAME = "gemini-pro-vision";
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
@@ -92,6 +94,8 @@ export const MedMatch = () => {
         run(files);
     }
 
+
+
     return (
         <>
             {loading && (
@@ -113,8 +117,14 @@ export const MedMatch = () => {
                             </p>
                         </div>
                         <Button className='text-color1 bg-color3 font-inter' fullWidth onClick={handleAutomate}>lets get rollin</Button>
+                    </>) : (
+                    <>
+                        <div className='bg-color3 p-5 rounded-xl text-lg'>
+                            <ReactMarkdown>{response}</ReactMarkdown>
 
-                    </>) : <ReactMarkdown>{response}</ReactMarkdown>}
+                        </div>
+                    </>
+                )}
             </div >
             <Appbar />
         </>

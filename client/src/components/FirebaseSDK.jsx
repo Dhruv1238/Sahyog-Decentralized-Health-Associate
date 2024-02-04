@@ -24,7 +24,7 @@ export const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);
 export const db = getFirestore(app);
 
-// const getFirestoreData = async () => {
-//     const querySnapshot = await getDocs(collection(db, "users", auth.currentUser.uid, "favorites"));
-//     querySnapshot.forEach((doc) => console.log(doc.data())); // log each doc
-// }
+const getFirestoreData = async () => {
+    const querySnapshot = await getDocs(collection(db, "users", auth.currentUser.uid, "favorites"));
+    querySnapshot.forEach((doc) => console.log(doc.data())); // log each doc
+}
