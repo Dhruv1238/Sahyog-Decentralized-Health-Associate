@@ -6,7 +6,7 @@ import { FaUsers } from 'react-icons/fa';
 import { FaUser } from 'react-icons/fa';
 import appSos from '../../assets/appbar-sos.png';
 import { HiUsers } from "react-icons/hi";
-
+import ai from '../../assets/ai.svg';
 import { GoHomeFill } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -79,15 +79,13 @@ const Appbar = () => {
                         className='flex flex-col items-center home'
                         onClick={() => handleItemClick('spaces')}
                     >
-                        <HiUsers color='white' style={getItemStyles('spaces')}
-                            className='w-6 h-6'
-                        />
+                       <img src={ai} alt='Sos-button' className='w-6 h-6' />
                         <Typography
                             color='white'
                             variant='small'
                             style={getItemStyles('spaces')}
                         >
-                            SARTHI
+                            Sarthi
                         </Typography>
                     </div>
                 </Link>

@@ -20,6 +20,7 @@ import Notes from './components/Calendar/Notes';
 
 import { Interaction } from './components/contract/Interaction';
 import { useContext } from 'react';
+import { MedMatch } from './pages/MedMatch';
 
 export const Router = () => {
     const { userDetails, userType, setUserType } = useContext(Interaction);
@@ -43,6 +44,7 @@ export const Router = () => {
                 <Route path="/allchat" element={<Chat />} />
                 <Route path="/notes/:date/:title/:text" element={<Notes />} />
                 <Route path="/chat/:chatId" element={<DoctorChat />} />
+                <Route path="/medmatch-concierge" element={<MedMatch />} />
             </Routes>
         </>
     );
