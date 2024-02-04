@@ -7,19 +7,57 @@ import { Button } from "@material-tailwind/react";
 import { Typography } from '@material-tailwind/react';
 import { doc, getDoc, getDocs, collection } from 'firebase/firestore';
 import { db } from '../../../components/FirebaseSDK'
+import { useNavigate } from 'react-router-dom';
+import { query, where, addDoc } from 'firebase/firestore';
+import { useAuth } from '@arcana/auth-react';
+
 
 const Specialist = () => {
     const [specialists, setSpecialists] = useState([]);
+    const { user } = useAuth();
+    const [currentSpecialist, setCurrentSpecialist] = useState({});
+    const [chats, setChats] = useState([]);
+    const navigate = useNavigate();
     const { id } = useParams();
-    // const { photoSrc } = window.history.state;
+    const { name, degree, photoSrc } = window.history.state;
     const handlePhoneClick = () => {
         const phoneNumber = '1234567890'; // Replace with the actual phone number
         window.location.href = `tel:${phoneNumber}`;
     };
-    const handleOnChat = () => {
-        window.location.href = '/doctorChat';
-    }
-    
+
+    useEffect(() => {
+        const fetchChats = async () => {
+            const querySnapshot = await getDocs(collection(db, 'chats'));
+            const chatsData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+            setChats(chatsData);
+        };
+        fetchChats();
+    })
+
+    const handleOnChat = async () => {
+        try {
+            const filteredChats = chats.filter(chat => {
+                const chatUsers = chat.users;
+                return chatUsers.includes(currentSpecialist.userID) && chatUsers.includes(user.publicKey);
+            });
+            console.log('Filtered chats:', filteredChats);
+            if (filteredChats.length > 0) {
+                const existingChatId = filteredChats[0].id;
+                console.log('Chat already exists. Redirecting to existing chat:', existingChatId);
+                navigate(`/chat/${existingChatId}`);
+            } else {
+                const chatDocRef = await addDoc(collection(db, 'chats'), {
+                    users: [user.publicKey, currentSpecialist.userID],
+                    messages: [],
+                });
+                console.log('New chat created with ID:', chatDocRef.id);
+                navigate(`/chat/${chatDocRef.id}`);
+            }
+            return filteredChats; // Return the filtered chats array
+        } catch (error) {
+            console.error('Error creating or checking chat:', error.message);
+        }
+    };
 
     const handleOnClick = () => {
         const text = "Hi, I want to book an appointment can you please let me know if its possible and also the details."
@@ -33,11 +71,13 @@ const Specialist = () => {
 
     const [loading, setLoading] = useState(true);
 
-
     useEffect(() => {
         const fetchPosts = async () => {
             const querySnapshot = await getDocs(collection(db, "specialists"));
             const specialistsData = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+            const currentSpecialist = specialistsData[id];
+            setCurrentSpecialist(currentSpecialist);
+            console.log(currentSpecialist);
             setSpecialists(specialistsData);
             setLoading(false);
             console.log(specialistsData);
@@ -50,7 +90,7 @@ const Specialist = () => {
     //     const fetchPost = async () => {
     //         const docRef = doc(db, "specialists", id);
     //         const docSnap = await getDoc(docRef);
-    
+
     //         if (docSnap.exists()) {
     //             setSpecialists(docSnap.data());
     //             setLoading(false);
@@ -60,7 +100,7 @@ const Specialist = () => {
 
     //         console.log(specialists);
     //     };
-    
+
     //     fetchPost();
     // }, [id]); // dependency array includes id
 
@@ -145,12 +185,7 @@ const Specialist = () => {
                     </Typography>
                 </div>
                 <div className='w-full' >
-                    <div className='flex justify-center gap-3 mt-5 mr-5 mb-28'  >
-                        <Button className='px-16 py-4 ' size='sm' color='blue' >
-                            <Link to='/doctorChat'>
-                                Chat
-                            </Link>
-                        </Button>
+                    <div className='flex justify-between gap-3 mt-5 mr-5 mb-28'  >
                         <Button className='border-2 border-[#65ADE1]' variant='outlined' size='sm' onClick={handleOnClick}>
                             <div className='text-white'>
                                 Book an Appointment
