@@ -6,6 +6,18 @@ import { onSnapshot, collection, where, query } from 'firebase/firestore';
 import { useRef } from 'react';
 import { addDoc, orderBy, doc, getDocs, getDoc } from 'firebase/firestore';
 
+const OutgoingMessage = ({ message }) => (
+    <div className="flex w-32 p-2 my-2 ml-auto text-xl bg-blue-500 rounded-md outgoing-message font-inter max-w-content">
+        {message.text}
+    </div>
+);
+
+const IncomingMessage = ({ message }) => (
+    <div className="flex w-32 p-2 my-2 text-xl text-gray-300 bg-gray-600 rounded-md incoming-message font-inter">
+        {message.text}
+    </div>
+);
+
 const DoctorChat = () => {
     const { user } = useAuth();
     const { chatId } = useParams();
@@ -15,6 +27,7 @@ const DoctorChat = () => {
     const [receiver, setReceiver] = useState('');
     const messagesEndRef = useRef(null);
     const [chats, setChats] = useState([]);
+    const [messageSent, setMessageSent] = useState(false);
 
     useEffect(() => {
         const fetchChatData = async () => {
@@ -42,9 +55,8 @@ const DoctorChat = () => {
                 }
             }
         };
-
         fetchChatData();
-    }, [chatId, user]);
+    }, [messageSent]);
 
     useEffect(() => {
         const chatQuery = query(collection(db, 'chats'), where('id', '==', chatId));
@@ -66,7 +78,7 @@ const DoctorChat = () => {
         });
 
         return () => unsubscribe();
-    }, [chatId]);
+    }, [messageSent]);
 
     const handleSendMessage = async () => {
         if (newMessage.trim() !== '') {
@@ -77,6 +89,7 @@ const DoctorChat = () => {
                     timestamp: new Date(),
                 });
                 setNewMessage('');
+                setMessageSent(!messageSent); // Toggle messageSent state
             } catch (error) {
                 console.error('Error sending message:', error.message);
             }
@@ -98,16 +111,14 @@ const DoctorChat = () => {
     return (
         <div className="flex flex-col h-screen text-white">
             <div className="flex-grow px-4 py-2 overflow-y-auto">
-                <div className="p-4 shadow-md mb-4rounded-md">
+                <div className="p-4 mb-4 rounded-md shadow-md">
                     <h2 className="mb-2 text-2xl font-semibold text-center">Chatting with: {receiver?.name}</h2>
                     {messages.map((message, index) => (
-                        <div
-                            key={index}
-                            className={`message ${message.sender !== sender ? 'bg-gray-600 text-gray-300' : 'bg-blue-500 ml-auto'
-                                } flex rounded-md p-2 my-1 w-[30%] text-xl font-inter md:max-w-[50%]`}
-                        >
-                            {message.text}
-                        </div>
+                        message.sender === sender ? (
+                            <OutgoingMessage key={index} message={message} />
+                        ) : (
+                            <IncomingMessage key={index} message={message} />
+                        )
                     ))}
                     <div ref={messagesEndRef}></div>
                 </div>
