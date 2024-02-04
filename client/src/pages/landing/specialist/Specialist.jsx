@@ -16,6 +16,10 @@ const Specialist = () => {
         const phoneNumber = '1234567890'; // Replace with the actual phone number
         window.location.href = `tel:${phoneNumber}`;
     };
+    const handleOnChat = () => {
+        window.location.href = '/doctorChat';
+    }
+    
 
     const handleOnClick = () => {
         const text = "Hi, I want to book an appointment can you please let me know if its possible and also the details."
