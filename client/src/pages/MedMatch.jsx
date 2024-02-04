@@ -4,6 +4,7 @@ import { FaFilePdf, FaUpload } from "react-icons/fa";
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 import { Button, Typography, Spinner } from "@material-tailwind/react";
 import Appbar from '../components/appbar/Appbar';
+import ReactMarkdown from 'react-markdown';
 
 const MODEL_NAME = "gemini-pro-vision";
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
@@ -61,7 +62,7 @@ export const MedMatch = () => {
                     reader.readAsDataURL(file);
                 });
             }),
-            { text: ". Please give an overview and tell me that which specialisation of doctor should I approach according to the report:" },
+            { text: ". Please give an overview and tell me that which specialisation of doctor should I approach according to the report, Give the Contact information of the best specialist in mumbai with his/her hospital name and contact number." },
         ]);
 
         const result = await model.generateContent({
@@ -101,7 +102,7 @@ export const MedMatch = () => {
                     </Typography>
                 </div>
             )}
-            <div className="flex flex-col font-inter items-center justify-center h-screen text-white p-10 gap-10">
+            <div className="md:mx-60 flex flex-col font-inter items-center justify-center h-screen text-white p-10 gap-10">
                 {response === "" ? (
                     <>
                         <div {...getRootProps({ className: 'dropzone flex flex-col items-center gap-5 justify-center w-full h-64 p-4 text-white border-2 border-gray-600 border-dashed rounded-xl' })}>
@@ -111,9 +112,9 @@ export const MedMatch = () => {
                                 {files.length > 0 ? `${files.length} iamge(s) added` : "Drag 'n' drop your report images here, or click to select files"}
                             </p>
                         </div>
-                        <Button className='text-color1 bg-color3 font-inter' onClick={handleAutomate}>lets get rollin</Button>
+                        <Button className='text-color1 bg-color3 font-inter' fullWidth onClick={handleAutomate}>lets get rollin</Button>
 
-                    </>) : <p className='text-xl text-white text-center'>{response}</p>}
+                    </>) : <ReactMarkdown>{response}</ReactMarkdown>}
             </div >
             <Appbar />
         </>
