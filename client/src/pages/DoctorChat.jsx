@@ -5,7 +5,6 @@ import { db } from '../components/FirebaseSDK';
 import { onSnapshot, collection, where, query } from 'firebase/firestore';
 import { useRef } from 'react';
 import { addDoc, orderBy, doc, getDocs, getDoc } from 'firebase/firestore';
-import React from 'react';
 
 const DoctorChat = () => {
     const { user } = useAuth();
@@ -19,10 +18,8 @@ const DoctorChat = () => {
 
     useEffect(() => {
         const fetchChatData = async () => {
-
             const chatDocRef = doc(db, 'chats', chatId);
             const chatDocSnapshot = await getDoc(chatDocRef);
-
             if (chatDocSnapshot.exists()) {
                 const chatData = chatDocSnapshot.data();
                 const members = chatData.users;
@@ -31,18 +28,28 @@ const DoctorChat = () => {
                     const senderId = members.find(memberId => memberId === user?.publicKey);
                     setSender(senderId);
                     setReceiver(receiverId);
+
+                    // Fetch receiver data
                     const receiverDocRef = doc(db, 'users', receiverId);
                     const receiverDocSnapshot = await getDoc(receiverDocRef);
+                    const receiverData = receiverDocSnapshot.data();
+                    setReceiver(receiverData);
+
+                    const messagesQuery = query(collection(db, 'chats', chatId, 'messages'), orderBy('timestamp'));
+                    const messagesSnapshot = await getDocs(messagesQuery);
+                    const messagesData = messagesSnapshot.docs.map((doc) => doc.data());
+                    setMessages(messagesData);
                 }
             }
         };
+
         fetchChatData();
     }, [chatId, user]);
 
     useEffect(() => {
-        const chatDocRef = doc(db, 'chats', chatId);
-        const chatDocSnapshot = onSnapshot(chatDocRef, (chatDoc) => {
-            const chatData = chatDoc.data();
+        const chatQuery = query(collection(db, 'chats'), where('id', '==', chatId));
+        const unsubscribe = onSnapshot(chatQuery, (snapshot) => {
+            const chatData = snapshot.docs[0]?.data();
             const messagesCollection = chatData?.messages;
 
             if (messagesCollection) {
@@ -58,11 +65,10 @@ const DoctorChat = () => {
             }
         });
 
-        return () => chatDocSnapshot();
-    }, [chatId, user]);
+        return () => unsubscribe();
+    }, [chatId]);
 
     const handleSendMessage = async () => {
-        console.log('Sender: ', sender);
         if (newMessage.trim() !== '') {
             try {
                 await addDoc(collection(db, 'chats', chatId, 'messages'), {
@@ -71,12 +77,6 @@ const DoctorChat = () => {
                     timestamp: new Date(),
                 });
                 setNewMessage('');
-                console.log('Message sent!');
-
-                const chatQuery = query(collection(db, 'chats', chatId, 'messages'), orderBy('timestamp'));
-                const snapshot = await getDocs(chatQuery);
-                const updatedMessages = snapshot.docs.map((doc) => doc.data());
-                setMessages(updatedMessages);
             } catch (error) {
                 console.error('Error sending message:', error.message);
             }
@@ -96,27 +96,38 @@ const DoctorChat = () => {
     const selectedChat = chats.find((chat) => chat.id === chatId);
 
     return (
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col h-screen text-white">
             <div className="flex-grow px-4 py-2 overflow-y-auto">
-                <h2 className='text-white'>Chatting with: {receiver}</h2>
-                {messages.map((message, index) => (
-                    <div key={index} className={`${message.sender === sender ? 'bg-color3 text-white ml-auto' : 'bg-gray-800 text-white mr-auto'} text-black flex rounded-xl p-3 m-1 text-base`}>
-                        {message.text}
-                    </div>
-                ))}
-                <div ref={messagesEndRef}></div>
+                <div className="p-4 shadow-md mb-4rounded-md">
+                    <h2 className="mb-2 text-2xl font-semibold text-center">Chatting with: {receiver?.name}</h2>
+                    {messages.map((message, index) => (
+                        <div
+                            key={index}
+                            className={`message ${message.sender !== sender ? 'bg-gray-600 text-gray-300' : 'bg-blue-500 ml-auto'
+                                } flex rounded-md p-2 my-1 w-[30%] text-xl font-inter md:max-w-[50%]`}
+                        >
+                            {message.text}
+                        </div>
+                    ))}
+                    <div ref={messagesEndRef}></div>
+                </div>
             </div>
-            <div className="flex items-center justify-between p-4 bg-gray-200">
+            <div className="flex items-center justify-between p-4 bg-gray-700 border-t border-gray-600">
                 <input
                     type="text"
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
                     placeholder="Type your message..."
-                    className="flex-grow p-2 mr-2 border"
+                    className="flex-grow p-2 mr-2 text-black border border-gray-600 rounded-md"
                 />
-                <button onClick={handleSendMessage} className="px-4 py-2 text-white bg-blue-500 rounded">Send</button>
+                <button
+                    onClick={handleSendMessage}
+                    className="px-4 py-2 text-white bg-blue-500 rounded-md cursor-pointer"
+                >
+                    Send
+                </button>
             </div>
-        </div >
+        </div>
     );
 };
 

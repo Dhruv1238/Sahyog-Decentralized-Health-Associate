@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@arcana/auth-react';
 import { addDoc, collection, onSnapshot, query, where } from 'firebase/firestore';
-import { getDocs, setDoc } from 'firebase/firestore';
+import { getDocs, setDoc , doc } from 'firebase/firestore';
 import { db } from '../components/FirebaseSDK';
 import { FiMessageSquare, FiUser, FiCheck, FiSend } from 'react-icons/fi'
 import { IconButton } from '@material-tailwind/react';
@@ -12,13 +12,14 @@ import { Typography } from '@material-tailwind/react';
 import { Drawer } from '@material-tailwind/react';
 import { CiCirclePlus } from "react-icons/ci";
 
+
 const DrawerDef = ({ users, chats }) => {
     const { user } = useAuth();
     const [openRight, setOpenRight] = useState(false);
     const navigate = useNavigate();
 
     const handleSelectedUser = async (selectedUser) => {
-        const filteredChats = chats.filter(chat => chat.users.includes(selectedUser.publicKey));
+        const filteredChats = chats.filter(chat => chat.users.includes(selectedUser.id));
         if (filteredChats.length > 0) {
             console.log("Chat already exists with:", selectedUser);
             navigate(`/chat/${filteredChats[0].id}`);
@@ -38,7 +39,6 @@ const DrawerDef = ({ users, chats }) => {
                 setOpenRight(false);
             } catch (error) {
                 console.error("Error creating chat:", error);
-                // Handle the error appropriately
             }
         }
     }
@@ -89,7 +89,6 @@ const UserBlock = ({ user, onClick }) => {
         <div className="flex items-center justify-start gap-5 p-4 border-b border-gray-500 cursor-pointer">
             <div className="w-5 h-5 bg-gray-300 rounded-full"></div>
             <div>
-                {/* Pass the user directly to the onClick function */}
                 <h3 className="text-lg font-semibold text-black whitespace-nowrap" onClick={() => onClick(user)}>
                     {user.name}
                 </h3>
@@ -100,32 +99,46 @@ const UserBlock = ({ user, onClick }) => {
 
 
 const ChatBlock = ({ chat, user }) => {
+    const [otherUser, setOtherUser] = useState(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const otherUserId = chat.users.find(userId => userId !== user.publicKey);
+
+        const otherUserDocRef = doc(db, 'users', otherUserId);
+        const unsubscribe = onSnapshot(otherUserDocRef, (otherUserDoc) => {
+            if (otherUserDoc.exists()) {
+                const otherUserData = otherUserDoc.data();
+                setOtherUser(otherUserData);
+            }
+        });
+
+        return () => unsubscribe();
+    }, [chat, user]);
 
     const handleChatClick = () => {
         navigate(`/chat/${chat.id}`);
     };
-    useEffect(() => {
-        console.log("Chat:", chat);
-        console.log("User:", user);
-        
-    })
 
     return (
         <div className="flex items-center justify-between p-4 border-b border-gray-500">
             <div className="flex items-center gap-4">
-                <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
                 <div>
-                    <h3 className="text-lg font-semibold">{}</h3>
+                    <h3 className="text-lg font-semibold">
+                        {otherUser ? otherUser.name : 'Loading...'}
+                    </h3>
                     <p className="text-gray-500">Last message goes here</p>
                 </div>
             </div>
             <div className="flex items-center">
-                <button onClick={handleChatClick} className="px-2 py-1 text-white bg-blue-700 rounded whitespace-nowrap">Open Chat</button>
+                <button onClick={handleChatClick} className="px-2 py-1 text-white bg-blue-700 rounded whitespace-nowrap">
+                    Open Chat
+                </button>
             </div>
         </div>
     );
 };
+
 
 const Chat = () => {
     const navigate = useNavigate();
