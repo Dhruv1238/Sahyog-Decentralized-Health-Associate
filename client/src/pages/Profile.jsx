@@ -48,7 +48,7 @@ const Profile = () => {
 
     const initialProfileData = {
         name: name,
-        email: user.email,
+        email: user?.email,
         age: age && age.toNumber(),
         contact: phoneNumber,
     };
