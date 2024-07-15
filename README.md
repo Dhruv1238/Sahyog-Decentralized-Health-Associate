@@ -43,12 +43,3 @@ SAHYOG employs blockchain security and smart contracts based on Polygon to ensur
 
 https://sahyog-tbd.netlify.app/
 
-
-## Authors
-
-- [@Dhruv1238](https://github.com/Dhruv1238)
-- [@KCmean](https://github.com/KCmean)
-- [@AaryaTiwari1211](https://github.com/AaryaTiwari1211)
-- [@neilcarnac](https://github.com/neilcarnac)
-
-
